@@ -1,44 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-// import IconButton from 'material-ui/IconButton';
-// import FontIcon from 'material-ui/FontIcon';
 
 const HomePage = ({
-    userId,
-    onSubmitUserId,
-    onChangeUserId,
+    userName,
+    onSubmitUserName,
+    onChangeUserName,
 }) => (
     <div>
         <AppBar
-            title="Github Finder"
+            title="介紹"
             showMenuIconButton={false}
         />
         <div>
-            github帳號:
-            {userId}
+            請輸入你的名稱:
+            {userName}
         </div>
         <TextField
-            hintText="Please Key in your Github User Id."
-            onChange={onChangeUserId}
+            hintText="Please Key in your Name"
+            onChange={onChangeUserName}
         />
         <Link to={{
             pathname: '/result',
-            query: { userId },
+            query: { userName },
         }}
         >
-            <RaisedButton label="Submit" onClick={() => onSubmitUserId(userId)} primary />
+            <RaisedButton label="Submit" onClick={() => onSubmitUserName(userName)} primary />
         </Link>
     </div>
 );
 const propTypes = {
-    userId: PropTypes.string,
-    onSubmitUserId: PropTypes.func,
-    onChangeUserId: PropTypes.func,
+    userName: PropTypes.string,
+    onSubmitUserName: PropTypes.func,
+    onChangeUserName: PropTypes.func,
 };
 
 HomePage.propTypes = {
@@ -46,9 +43,9 @@ HomePage.propTypes = {
 };
 
 HomePage.defaultProps = {
-    userId: 'haixyeh',
-    onSubmitUserId: () => {},
-    onChangeUserId: () => {},
+    userName: 'haixyeh',
+    onSubmitUserName: () => {},
+    onChangeUserName: () => {},
 };
 
 PropTypes.checkPropTypes(propTypes, HomePage.defaultProps, 'prop', 'MyComponent');

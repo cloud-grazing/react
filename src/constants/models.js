@@ -4,8 +4,9 @@ export const UiState = Immutable.fromJS({
     spinnerVisible: false,
 });
 
-// 我们使用 userId 来暂存用户 ID，data 存放 Ajax 取回的数据
-export const GithubState = Immutable.fromJS({
-    userId: '',
-    data: {},
+// 我們使用 userName 來暫存用户 name 存放數據
+export const WelcomeState = Immutable.fromJS({
+    userName: '',
+    name: '',
+    animationStatus: false,
 });

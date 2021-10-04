@@ -1,30 +1,18 @@
-// router/index.js
-// import React from 'react';
-// import Main from '../components/Main/Main';
-import HomePage from '../containers/HomePage/HomePage';
-import ResultPage from '../containers/ResultPage/ResultPage';
+import React from 'react';
+
+const rootPath = process.env.PUBLIC_URL;
 
 // 重點觀察位置
 const routes = [
-    // {
-    //     path: '/',
-    //     // exact: true,
-    //     component: Main,
-    // },
     {
         path: '/',
         exact: true,
-        component: HomePage,
+        component: React.lazy(() => import('./Home')),
     },
     {
-        path: '/result',
-        component: ResultPage,
+        path: '/training',
+        component: React.lazy(() => import('./Training')),
     },
-
-    // {
-    //     path: '/result',
-    //     component: ResultPage,
-    // },
     // {
     //     path: '/nested',
     //     component: React.lazy(() => import('../components/Nested')),
@@ -42,3 +30,4 @@ const routes = [
 ];
 
 export default routes;
+export { rootPath };
