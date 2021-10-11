@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
-import AppBar from 'material-ui/AppBar';
+import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
 
 const Home = ({
@@ -23,7 +23,14 @@ const Home = ({
         />
         <RaisedButton label="提交" onClick={() => onSubmitUserName(userName)} primary />
         <div>{ showName }</div>
-        {showName && !animationStatus ? '水喔！完成第一課' : ''}
+        {showName && !animationStatus ? (
+            <Link to={{
+                pathname: '/training',
+            }}
+            >
+                <RaisedButton label="走吧！來去Demo" primary />
+            </Link>
+        ) : ''}
     </div>
 );
 const propTypes = {

@@ -1,8 +1,6 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import { createBrowserHistory } from 'history';
 import { renderRoutes } from 'react-router-config';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { BrowserRouter, Switch } from 'react-router-dom';
@@ -17,9 +15,7 @@ ReactDOM.render(
                 <Switch>
                     <App>
                         <Suspense fallback={<div>Loading...</div>}>
-                            <Router history={(createBrowserHistory())}>
-                                {renderRoutes(routes)}
-                            </Router>
+                            {renderRoutes(routes)}
                         </Suspense>
                     </App>
                 </Switch>

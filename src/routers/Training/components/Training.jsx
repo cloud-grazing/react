@@ -1,41 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 
-const Training = ({
-    userName,
-    onSubmitUserName,
-    onChangeUserName,
-}) => (
-    <div>
-        <AppBar
-            title="練練習囉"
-            showMenuIconButton={false}
-        />
-        <div>
-            請輸入你的名稱:
-            {userName}
-        </div>
-        <TextField
-            hintText="Please Key in your Name"
-            onChange={onChangeUserName}
-        />
-        <Link to={{
-            pathname: '/result',
-            query: { userName },
-        }}
-        >
-            <RaisedButton label="Submit" onClick={() => onSubmitUserName(userName)} primary />
-        </Link>
-    </div>
-);
+class Training extends Component {
+    constructor() {
+        super();
+        this.state = {
+        };
+    }
+
+    componentDidMount() {
+        // const { dispatch } = this.props;
+    }
+
+    render() {
+        const { useState } = React;
+        const Counter = () => {
+            const [count, setCount] = useState(10);
+            const increase = () => { setCount(count + 1); };
+            const decrease = () => { setCount(count - 1); };
+
+            return (
+                <div className="container">
+                    <button
+                        type="button"
+                        aria-label="button"
+                        onClick={decrease}
+                    >
+                        ＋
+                    </button>
+                    <span className="number">{count}</span>
+                    <button
+                        type="button"
+                        aria-label="button"
+                        onClick={increase}
+                    >
+                        -
+                    </button>
+                </div>
+            );
+        };
+
+        const NextLesson = () => {
+            const [lesson, setCount] = useState(0);
+            const addLesson = () => { setCount(lesson + 1); };
+            return (
+                <button
+                    type="button"
+                    aria-label="button"
+                    onClick={addLesson}
+                />
+            );
+        };
+        const { userName } = this.props;
+        // const { lesson } = this.state;
+        return (
+            <div className="Training">
+                {`您好~ ${userName}`}
+                <p>恭喜，你已經從home頁將userName寫入store，並且使用Immutable將資料取得。</p>
+                <p>簡單來使用看看hooks吧！</p>
+                <hr />
+                <p>在React class 內 render內寫 hook</p>
+                <Counter />
+                <NextLesson />
+            </div>
+        );
+    }
+}
+
 const propTypes = {
-    userName: PropTypes.string,
-    onSubmitUserName: PropTypes.func,
-    onChangeUserName: PropTypes.func,
+    userName: PropTypes.strring,
+    // children: PropTypes.node.isRequired,
 };
 
 Training.propTypes = {
@@ -43,10 +78,12 @@ Training.propTypes = {
 };
 
 Training.defaultProps = {
-    userName: 'haixyeh',
-    onSubmitUserName: () => {},
-    onChangeUserName: () => {},
+    children: null,
+    userName: '',
 };
 
-PropTypes.checkPropTypes(propTypes, Training.defaultProps, 'prop', 'MyComponent');
-export default (Training);
+const select = (state) => ({
+    userName: state.getIn(['welcomeReducers', 'userName']),
+});
+
+export default connect(select)(Training);
