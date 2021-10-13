@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ProgressDIY from '../hook/ProgressDIY';
+import Cheer from '../hook/Cheer';
 
 class Training extends Component {
     constructor() {
@@ -10,50 +12,73 @@ class Training extends Component {
     }
 
     componentDidMount() {
-        // const { dispatch } = this.props;
+        const { userName, history } = this.props;
+        if (!userName) {
+            history.push('/');
+        }
     }
 
-    render() {
-        const { useState } = React;
-        const Counter = () => {
-            const [count, setCount] = useState(10);
-            const increase = () => { setCount(count + 1); };
-            const decrease = () => { setCount(count - 1); };
+    // 加減計算機
+    Counter = () => {
+        const [count, setCount] = useState(10);
+        const increase = () => { setCount(count + 1); };
+        const decrease = () => { setCount(count - 1); };
 
-            return (
-                <div className="container">
-                    <button
-                        type="button"
-                        aria-label="button"
-                        onClick={decrease}
-                    >
-                        ＋
-                    </button>
-                    <span className="number">{count}</span>
-                    <button
-                        type="button"
-                        aria-label="button"
-                        onClick={increase}
-                    >
-                        -
-                    </button>
-                </div>
-            );
-        };
-
-        const NextLesson = () => {
-            const [lesson, setCount] = useState(0);
-            const addLesson = () => { setCount(lesson + 1); };
-            return (
+        return (
+            <div className="container">
                 <button
                     type="button"
                     aria-label="button"
-                    onClick={addLesson}
+                    onClick={decrease}
+                >
+                    -
+                </button>
+                <span className="number">{count}</span>
+                <button
+                    type="button"
+                    aria-label="button"
+                    onClick={increase}
+                >
+                    +
+                </button>
+            </div>
+        );
+    };
+
+    NextLesson = () => {
+        const [lesson, setCount] = useState(0);
+        const addLesson = () => { setCount(lesson + 1); };
+        return (
+            <button
+                type="button"
+                aria-label="button"
+                onClick={addLesson}
+            >
+                Next
+            </button>
+        );
+    };
+
+    Progress = () => {
+        const [value, setValue] = useState(0);
+        const [score, setScore] = useState(0);
+        return (
+            <div>
+                <ProgressDIY
+                    value={value}
+                    onClick={(e) => { setValue(e.target.value); }}
+                    onChange={(e) => { setValue(e.target.value); }}
                 />
-            );
-        };
+                <Cheer value={score} onClick={(e) => { setScore(e.target.value); }} />
+            </div>
+        );
+    };
+
+    render() {
         const { userName } = this.props;
-        // const { lesson } = this.state;
+        const { Counter, NextLesson, Progress } = this;
+        const { lesson } = this.state;
+
         return (
             <div className="Training">
                 {`您好~ ${userName}`}
@@ -63,13 +88,16 @@ class Training extends Component {
                 <p>在React class 內 render內寫 hook</p>
                 <Counter />
                 <NextLesson />
+                {lesson}
+                <Progress />
             </div>
         );
     }
 }
 
 const propTypes = {
-    userName: PropTypes.strring,
+    userName: PropTypes.string,
+    history: PropTypes.object.isRequired,
     // children: PropTypes.node.isRequired,
 };
 

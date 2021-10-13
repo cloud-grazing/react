@@ -43,3 +43,8 @@
     padding: 20px;
     font-size: 40px;
 }
+
+.progress {
+    margin: 20px auto;
+    width: 300px;
+}
