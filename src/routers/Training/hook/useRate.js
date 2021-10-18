@@ -18,17 +18,15 @@ const useRate = (value) => {
             }
             if (rate >= +value) {
                 if (tm.current) { clearTimeout(tm.current); }
-                // eslint-disable-next-line no-shadow
                 tmTwo.current = setTimeout(() => { setRate(rate - 1); }, 20);
                 return;
             }
             if (tmTwo.current) { clearTimeout(tmTwo.current); }
-            // eslint-disable-next-line no-shadow
             tm.current = setTimeout(() => { setRate(rate + 1); }, 20);
         }
     }, [value, rate]);
 
-    return rate;
+    return +rate;
 };
 
 export default useRate;

@@ -1,13 +1,14 @@
 import React, { Component, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ProgressDIY from '../hook/ProgressDIY';
-import Cheer from '../hook/Cheer';
+import ProgressDIY from './ProgressDIY';
+import Cheer from './Cheer';
 
 class Training extends Component {
     constructor() {
         super();
         this.state = {
+            lesson: 0,
         };
     }
 
@@ -46,8 +47,7 @@ class Training extends Component {
     };
 
     NextLesson = () => {
-        const [lesson, setCount] = useState(0);
-        const addLesson = () => { setCount(lesson + 1); };
+        const addLesson = () => { this.addLesson(); };
         return (
             <button
                 type="button"
@@ -59,17 +59,32 @@ class Training extends Component {
         );
     };
 
+    addLesson = () => {
+        const { lesson } = this.state;
+        const newLesson = lesson + 1;
+        if (newLesson > 3) {
+            return;
+        }
+        this.setState({ lesson: newLesson });
+    }
+
     Progress = () => {
+        const { lesson } = this.state;
         const [value, setValue] = useState(0);
         const [score, setScore] = useState(0);
         return (
             <div>
-                <ProgressDIY
-                    value={value}
-                    onClick={(e) => { setValue(e.target.value); }}
-                    onChange={(e) => { setValue(e.target.value); }}
-                />
-                <Cheer value={score} onClick={(e) => { setScore(e.target.value); }} />
+                {lesson >= 2 && (
+                    <ProgressDIY
+                        value={value}
+                        onClick={(e) => { setValue(+e.target.value); }}
+                        onChange={(e) => { setValue(+e.target.value); }}
+                    />
+                )}
+                {lesson >= 3 && (
+                    <Cheer value={score} onClick={(e) => { setScore(+e.target.value); }} />
+                )}
+
             </div>
         );
     };
@@ -81,15 +96,21 @@ class Training extends Component {
 
         return (
             <div className="Training">
-                {`您好~ ${userName}`}
-                <p>恭喜，你已經從home頁將userName寫入store，並且使用Immutable將資料取得。</p>
-                <p>簡單來使用看看hooks吧！</p>
-                <hr />
-                <p>在React class 內 render內寫 hook</p>
-                <Counter />
-                <NextLesson />
-                {lesson}
-                <Progress />
+                <div className="test-box">
+                    {`您好~ ${userName}`}
+                    <p>恭喜，你已經從home頁將userName寫入store，並且使用Immutable將資料取得。</p>
+                    <p>簡單來使用看看hooks吧！</p>
+                </div>
+                {lesson >= 1
+                    && (
+                        <div className="test-box">
+                            <p>在React class 內 render內寫 hook</p>
+                            <Counter />
+                        </div>
+                    )}
+
+                {lesson >= 2 && <Progress />}
+                {lesson <= 2 && <NextLesson />}
             </div>
         );
     }
@@ -98,7 +119,6 @@ class Training extends Component {
 const propTypes = {
     userName: PropTypes.string,
     history: PropTypes.object.isRequired,
-    // children: PropTypes.node.isRequired,
 };
 
 Training.propTypes = {

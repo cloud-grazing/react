@@ -1,16 +1,14 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import useRate from './useRate';
+import PropTypes from 'prop-types';
+import useRate from '../hook/useRate';
 
 const ProgressDIY = (props) => {
-    // console.log(props, 'props');
-    // eslint-disable-next-line react/prop-types
     const { value, onClick, onChange } = props;
-    const percent = useRate(value);
-    console.log(percent, 'percent');
+    const percent = useRate(Number(value));
 
     return (
-        <div className="progress">
+        <div className="progress test-box">
+            使用hook來為執行動作
             <div
                 className="progress-back"
                 style={{
@@ -40,13 +38,13 @@ const ProgressDIY = (props) => {
     );
 };
 
-// const propTypes = {
-//     onClick: PropTypes.func,
-//     value: PropTypes.number,
-// };
+const propTypes = {
+    onClick: PropTypes.func,
+    value: PropTypes.number,
+};
 
-// ProgressDIY.propTypes = {
-//     ...propTypes,
-// };
+ProgressDIY.propTypes = {
+    ...propTypes,
+};
 
 export default ProgressDIY;

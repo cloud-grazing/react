@@ -14,13 +14,13 @@ const welcomeReducers = handleActions({
             animationStatus: true,
         })
     ),
-    // 当用户按送出按钮，发出 GET_WELCOME_SUCCESS action 时将接收到的数据 merge
+    // 當用戶按送出按鈕，發出 GET_WELCOME_SUCCESS action 時將接收到的數據 merge
     [GET_WELCOME_SUCCESS]: (state, { payload }) => (
         state.merge({
             name: payload.name,
         })
     ),
-    // 当用户输入用户 ID 会发出 CHAGE_USER_ID action 时将接收到的数据 merge
+    // 用戶輸入用戶 ID 會發出 CHAGE_USER_ID action 時將接收到的數據 merge
     [CHAGE_USER_ID]: (state, { payload }) => (
         state.merge({
             userName:
